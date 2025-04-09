@@ -110,14 +110,21 @@ print_int:
     jr    ra
 
 # prints out a string
+# input values: a0: the address of the string to print
+# does not return anything
 print_str:
+    # move the address of the string into a1
     mv a1, a0
-    li a0, 4 # tells ecall to print the string that a1 points to
+    # tell ecall to print the string that a1 points to
+    li a0, 4
+    # print the string
     ecall
+    # return to the calling function
     jr    ra
 
 print_newline:
     li a1, '\n'
-    li a0, 11 # tells ecall to print the character in a1
+    li a0, 11 # tell ecall to print the character in a1
     ecall
+    # return to the calling function
     jr    ra

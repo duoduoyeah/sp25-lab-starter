@@ -32,7 +32,8 @@ main:
 #     where ^ is the exponent operator, not XOR
 ex2:
     # Note: Add code BELOW without altering existing lines.
-    sw s0 0(sp)
+    addi sp, sp, -4    # Allocate space on stack
+    sw s0, 0(sp)
 
     # return 1 if a1 == 0
     beq a1 x0 ex2_zero_case
@@ -53,5 +54,6 @@ ex2_zero_case:
 
 ex2_end:
     lw s0 0(sp)
+    addi sp, sp, 4    # Deallocate stack space
 
     jr ra

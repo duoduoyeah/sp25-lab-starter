@@ -32,6 +32,11 @@ main:
 #     where ^ is the exponent operator, not XOR
 ex3:
     # Note: Add code BELOW without altering existing lines.
+    # Save return address and arguments on stack
+    addi sp, sp, -12
+    sw ra, 0(sp)
+    sw a0, 4(sp)
+    sw a1, 8(sp)
 
     # return 1 if a1 == 0
     beq a1 x0 ex3_zero_case
@@ -42,15 +47,23 @@ ex3:
 
     jal ra ex3    # call ex3(a0, a1-1)
 
+    # Restore a0 from stack (not t0) after recursive call
+    lw t0, 4(sp)
     mul a0 a0 t0  # multiply ex3(a0, a1-1) by t0
                   # (which contains the value of a0)
 
+    # Restore ra before returning
+    lw ra, 0(sp)
+    addi sp, sp, 12
     j ex3_end
 
     # Note: Add code ABOVE without altering existing lines.
 
 ex3_zero_case:
     li a0 1
+    # Restore ra before returning in the base case
+    lw ra, 0(sp)
+    addi sp, sp, 12
 
 ex3_end:
     jr ra
